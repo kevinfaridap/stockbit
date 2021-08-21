@@ -1,0 +1,32 @@
+.container__navbar{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.wrap__navbar{
+  width: 100%;
+}
+
+.navbar__contents{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 0 0 64px;
+  display: block;
+}
+
+.title{
+  font-family: Bentham;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@media screen and (min-width:320px) and (max-width:992px) {
+  .navbar__contents{
+    padding: 0 0 0 16px;
+  }
+}
