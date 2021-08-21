@@ -11,7 +11,7 @@
 .header__content{
   box-sizing: border-box;
   width: 100%;
-  padding: 0;
+  padding: 0 0 56px 0;
   background-color:  #F6F6F6;
   display: block;
 }
@@ -25,7 +25,16 @@
   text-align: center;
   letter-spacing: 0.1em;
   color: #333333;
-  padding: 56px 0;
+  padding: 56px 0 0 0;
+}
+
+.input__search{
+  display: flex;
+  margin: 24px auto 0 auto;
+  outline: none;
+  padding: 8px;
+  border: 1px solid #CA8F48;
+  border-radius: 10px;
 }
 
 .container__cardmovies{
@@ -52,10 +61,12 @@
 .poster{
   display: block;
   margin: 0 auto;
+  max-width: 240px;
 }
 
 .cardmovies__name{
-  padding: 10px 0 0 24px;
+  padding: 10px 0 0 0;
+  text-align: center;
 }
 
 .cardmovies__detail{

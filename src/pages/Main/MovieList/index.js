@@ -1,26 +1,32 @@
 import React, {useState, useEffect} from 'react'
 import Navbar from '../../../components/Navbar'
 import style from './movielist.module.css'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 function MovieList() {
+  const history = useHistory()
+  const dataSearch = history.location.search;
+  const titleSerach = dataSearch.substring(dataSearch.indexOf("=")+1);
+  console.log(titleSerach, 'cccccccccccc');
+
 
   const [data, setData] = useState([])
-  const [title, setTitle] = useState('Batman')
+  const [title, setTitle] = useState({
+    name: ''
+  })
 
   useEffect(()=>{
-    axios.get(`https://www.omdbapi.com/?apikey=faf7e5bb&s=${title}`)
+    axios.get(`https://www.omdbapi.com/?apikey=faf7e5bb&s=${titleSerach}`)
     .then((res)=>{
       const dataMovies = res.data.Search
       setData(dataMovies)
-      console.log(dataMovies, 'isina');
     })
     .catch((err)=>{
       console.log(err);
     })
 
-  }, [])
+  }, [titleSerach])
 
   const handleInputSearch = (e) =>{
     setTitle({
@@ -37,16 +43,19 @@ function MovieList() {
       <section className={style["container__header"]}>
         <div className={style["wrap__header"]}>
           <div className={style["header__content"]}>
-            <h2 className={style["header__title"]}>ALL NOW SHOWING MOVIES</h2>
-            <input 
-              className={style["input__search"]} 
-              type="search" 
-              placeholder="Search Your Movies" 
-              name="title"
-              id="title"
-              value={title.name}
-              onChange={(e)=>handleInputSearch(e)}
-            />
+            <h2 className={style["header__title"]}>SEARCH NOW SHOWING MOVIES</h2>
+            <form autoComplete="off">
+              <input 
+                className={style["input__search"]} 
+                type="search" 
+                placeholder="Example : Batman" 
+                name="name"
+                id="name"
+                value={title.name}
+                onChange={(e)=>handleInputSearch(e)}
+              />
+            </form>
+            
           </div>
         </div>
       </section>
