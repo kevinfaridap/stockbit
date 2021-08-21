@@ -8,25 +8,34 @@ function MovieList() {
   const history = useHistory()
   const dataSearch = history.location.search;
   const titleSerach = dataSearch.substring(dataSearch.indexOf("=")+1);
-  console.log(titleSerach, 'cccccccccccc');
+  // console.log(titleSerach, 'cccccccccccc');
 
 
   const [data, setData] = useState([])
   const [title, setTitle] = useState({
     name: ''
   })
+  const [empty, setEmpty]= useState(false)
 
   useEffect(()=>{
     axios.get(`https://www.omdbapi.com/?apikey=faf7e5bb&s=${titleSerach}`)
     .then((res)=>{
       const dataMovies = res.data.Search
-      setData(dataMovies)
+      if(dataMovies.length>0){
+        setData(dataMovies)
+        setEmpty(false)
+      } else {
+        setEmpty(true)
+      }
+      // console.log(dataMovies, 'kasdkasfjas');
     })
     .catch((err)=>{
       console.log(err);
+      setEmpty(true)
     })
 
   }, [titleSerach])
+  console.log(empty)
 
   const handleInputSearch = (e) =>{
     setTitle({
@@ -60,7 +69,34 @@ function MovieList() {
         </div>
       </section>
       <section className={style["container__cardmovies"]}>
-        {data !== undefined ? data.map((item, i)=>{
+      {
+        data===undefined || empty ? 
+        <>
+          <h2 className={style["no_data"]}>No Data Found, Try to type 'Batman'</h2>
+        </> 
+        :
+        data.map((item, i)=>{
+          return (
+            <div className={style["wrap__cardmovies"]} key={i}>
+              <div className={style["cardmovies__content"]}>
+                <div className={style["content__img"]}>
+                  <img className={style["poster"]} src={item.Poster} alt="" />
+                </div>
+                <div className={style["cardmovies__name"]}>
+                  <p className={style["cardmovies_title"]}>{item.Title}</p>
+                  <p className={style["cardmovies_year"]}>{item.Year}</p>
+                  <Link className={style["cardmovies__detail"]} to={`/moviedetails/${item.imdbID}`}>Details</Link>
+                </div>          
+              </div>
+            </div>
+          )
+        })
+      }
+
+
+
+
+        {/* {data !== undefined || empty? data.map((item, i)=>{
         return (
           <div className={style["wrap__cardmovies"]}>
             <div className={style["cardmovies__content"]}>
@@ -76,7 +112,10 @@ function MovieList() {
           </div>
           
          )
-         }) : null} 
+         }) : 
+         <h2>No Data</h2>
+         }  */}
+
       </section>
     </div>
   )
